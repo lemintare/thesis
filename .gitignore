@@ -1,0 +1,9 @@
+.env
+
+website/backend/src/models
+
+.vscode
+
+.venv
+
+__pycache__

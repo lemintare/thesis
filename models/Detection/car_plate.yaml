@@ -1,0 +1,6 @@
+train:
+test:
+val:
+
+nc: 1
+names: ['plate']
