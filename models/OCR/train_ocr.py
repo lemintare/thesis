@@ -296,10 +296,10 @@ def main():
             task.logger.report_scalar("SymAcc", "train", train_sym_acc, epoch)
             task.logger.report_scalar("SymAcc", "val", val_sym_acc, epoch)
 
-        if val_loss < best_loss:
-            best_loss = val_loss
+        if val_plate_acc < best_loss:
+            best_loss = val_plate_acc
             torch.save(model.state_dict(), args.out)
-            print(f"\n✔ Saved new best model to {args.out} (val loss {val_loss:.4f})\n")
+            print(f"\n✔ Saved new best model to {args.out} (val plate acc {val_plate_acc:.4f})\n")
 
 
 if __name__ == "__main__":
