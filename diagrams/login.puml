@@ -1,0 +1,16 @@
+@startuml
+
+actor User 
+participant Frontend
+participant Backend
+database Database
+
+User -> Frontend : Ввод данных и вход
+Frontend -> Backend : POST http://127.0.0.1:8000/login
+Backend -> Database : Поиск данных пользователя
+Database -> Backend : Данные пользователя
+Backend -> Backend : Создать JWT токен
+Backend -> Frontend : Отправить JWT токен
+Frontend -> User : Редирект на http://127.0.0.1:3000/dashboard
+
+@enduml

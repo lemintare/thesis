@@ -1,0 +1,27 @@
+@startuml
+
+actor User 
+participant Frontend
+participant Backend
+database Database
+
+User -> Frontend : http://127.0.0.1:3000/dashboard
+Frontend -> Backend : POST http://127.0.0.1:8000/verify-token
+Backend -> Backend : Расшифровать JWT токен
+Backend -> Database : Проверить пользователя
+Database -> Backend : Данные пользователя
+alt Токен действителен
+    Backend --> Frontend : 200 OK
+    Frontend -> User : Middleware пропускает на /dashboard
+    Frontend -> Backend : GET http://127.0.0.1:8000/stream-feed
+    Backend -> Frontend : Видеопоток
+    Frontend -> User : Отрисовывает видеопоток
+    Frontend -> Backend : GET http://127.0.0.1:8000/vehicles
+    Backend -> Database : Запросить последние 10 записей из таблицы vehicles
+    Database -> Backend : 10 записей из таблицы vehicles
+    Backend -> Frontend : 10 записей из таблицы vehicles
+    Frontend -> User : Отрисовывает таблицу 
+else Токен недействителен 
+    Backend --> Frontend : 401 Unauthorized
+    Frontend -> User : Редирект на /login
+@enduml

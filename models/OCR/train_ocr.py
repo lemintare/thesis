@@ -275,7 +275,7 @@ def main():
     criterion = nn.CTCLoss(blank=char_to_idx['blank'], zero_infinity=True)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
 
-    best_loss = float('inf')
+    best_acc = 0.0
     for epoch in range(1, args.epochs + 1):
         train_loss, train_plate_acc, train_sym_acc = train_one_epoch(
             model, train_loader, criterion, optimizer, device)
@@ -296,8 +296,8 @@ def main():
             task.logger.report_scalar("SymAcc", "train", train_sym_acc, epoch)
             task.logger.report_scalar("SymAcc", "val", val_sym_acc, epoch)
 
-        if val_plate_acc < best_loss:
-            best_loss = val_plate_acc
+        if val_plate_acc > best_acc:
+            best_acc = val_plate_acc
             torch.save(model.state_dict(), args.out)
             print(f"\n✔ Saved new best model to {args.out} (val plate acc {val_plate_acc:.4f})\n")
 

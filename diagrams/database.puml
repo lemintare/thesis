@@ -1,0 +1,16 @@
+@startuml
+
+class users {
+    +id: Integer
+    +username: String
+    +email: String
+    +hashed_password: String
+}
+
+class vehicles {
+    +id: Integer
+    +plate_number: String
+    +entry_time: DateTime
+}
+
+@enduml
